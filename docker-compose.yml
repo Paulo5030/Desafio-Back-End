@@ -1,0 +1,50 @@
+version: '2.0'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cloudsigma.com/php
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html/
+    volumes:
+      - ./:/var/www/html/
+      - ./php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+
+  #MySQL Service
+  db:
+    image: mysql:5.7
+    container_name: db
+    command: --innodb-use-native-aio=0
+    restart: always
+    tty: true
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./.docker/dbdata:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 28041998
+      MYSQL_DATABASE: desafio_picpay
+#Volumes
+volumes:
+  dbdata:
+    driver: local
