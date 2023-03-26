@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Exceptions\NotFoundException;
 use App\Models\Retailer;
 use App\Models\User;
 use App\Repositories\AuthRepository;
@@ -10,7 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
-use PHPUnit\Framework\InvalidDataProviderException;
+
 
 class AuthService
 {
@@ -35,7 +36,6 @@ class AuthService
         }
 
         if (!Hash::check($fields['password'], $model->password)) {
-
             throw new AuthorizationException('Wrong credentials', 401);
         }
 
@@ -60,6 +60,6 @@ class AuthService
         if ($provider == "retailer") {
             return new Retailer();
         }
-        throw new InvalidDataProviderException('Provider not found');
+        throw new NotFoundException('Provider not found');
     }
 }

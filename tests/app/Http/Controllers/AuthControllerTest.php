@@ -17,25 +17,21 @@ class AuthControllerTest extends TestCase
             'password' => 'dev2025',
         ];
 
-
-        $response = $this->post(route('authenticate', ['provider' => 'deixa o sub']), $payload);
-        $responseData = json_decode($response->getContent(), true);
-        $response->assertStatus(422);
-        $this->assertEquals( "Provider not found", $responseData[0]['errors']['main']);
+        $response = $this->post(route('authentication', ['provider' => 'test']), $payload);
+        $response->assertStatus(404);
+        $this->assertEquals( "Provider not found", $response->getContent());
     }
 
     public function testUserShouldBeDeniedNotRegistered () // usuário de teste deve ser negado não registrado
     {
         $payload = [
-            'email' => 'paulo@dev.com.br',
-            'password' => 'dev2025',
+            'email' => 'paulo@dev.com',
+            'password' => 'dev25',
         ];
 
-        $response = $this->post(route('authenticate', ['provider' => 'retailer']), $payload);
-
-        $responseData = json_decode($response->getContent(), true);
+        $response = $this->post(route('authentication', ['provider' => 'retailer']), $payload);
         $response->assertStatus(401);
-        $this->assertEquals( "Wrong credentials", $responseData[0]['errors']['main']);
+        $this->assertEquals( "Wrong credentials", $response->getContent());
     }
 
     public function testUserShouldSendWrongPassword () // usuário de teste deve enviar senha errada
@@ -46,10 +42,9 @@ class AuthControllerTest extends TestCase
             'password' => 'test123',
         ];
 
-        $response = $this->post(route('authenticate', ['provider' => 'user']), $payload);
-        $responseData = json_decode($response->getContent(), true);
+        $response = $this->post(route('authentication', ['provider' => 'user']), $payload);
         $response->assertStatus(401);
-        $this->assertEquals( "Wrong credentials", $responseData[0]['errors']['main']);
+        $this->assertEquals( "Wrong credentials", $response->getContent());
     }
 
     public function testUserCanAuthenticate () // teste O usuário pode autenticar
@@ -61,7 +56,8 @@ class AuthControllerTest extends TestCase
             'email' => $user->email,
             'password' => 'dev2025'
         ];
-        $response = $this->post(route('authenticate', ['provider' => 'user']), $payload);
+
+        $response = $this->post(route('authentication', ['provider' => 'user']), $payload);
         $response->assertStatus(200);
         $response->assertJsonStructure(['access_token', 'expires_at', 'provider']);
     }

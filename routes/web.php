@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +21,6 @@ Route::get('/', function () {
 Route::get('users/me', ['as' => 'usersMe','uses'=>'App\Http\Controllers\MeController@getMe']);
 
 //User == Retailer usando o principio de solid pra deixar o codigo organizado e padronizado
-Route::post('/auth/{provider}',['as' => 'authenticate','uses'=>'App\Http\Controllers\AuthController@authenticate']);
+Route::post('/auth/{provider}',['as' => 'authentication','uses'=>'App\Http\Controllers\AuthController@authentication']);
 
 Route::post('/transactions', ['as' => 'postTransaction','uses'=>'App\Http\Controllers\Transactions\TransactionsController@postTransaction']);

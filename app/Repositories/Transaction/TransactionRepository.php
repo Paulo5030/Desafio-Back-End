@@ -3,7 +3,6 @@
 namespace App\Repositories\Transaction;
 
 use App\Models\Transactions\Transaction;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionRepository
@@ -12,7 +11,7 @@ class TransactionRepository
    {
        $this->model = $transaction;
    }
-   public function doTransaction (Model $provider, string $data)
+   public function doTransaction (string $data)
    {
        return Auth::guard($data)->user()->wallet;
    }

@@ -3,7 +3,8 @@
 namespace App\Service;
 
 use App\Events\SendNotification;
-use App\Exceptions\IdleServiceException;
+use App\Exceptions\NotFoundException;
+use App\Exceptions\UnavailableServiceException;
 use App\Exceptions\InsufficientFundsException;
 use App\Exceptions\TransactionDeniedException;
 use App\Models\Retailer;
@@ -15,7 +16,6 @@ use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\InvalidDataProviderException;
 use Ramsey\Uuid\Uuid;
 
 class TransactionService
@@ -31,27 +31,30 @@ class TransactionService
      */
     public function handle(array $data): Transaction
     {
-        if (!$this->guardCanTransfer()) {
-            throw new TransactionDeniedException('Retailer is not authorized to make transactions', 401);
+        if (!$this->guardCanTransfer()) { // guarda pode transferir
+            throw new TransactionDeniedException();
         }
 
-        if(!$payee = $this->retrievePayee($data)) {
-            throw new InvalidDataProviderException('User Not Found', 404);
+        if (!$payee = $this->retrievePayee($data)) { // recuperar Beneficiário
+            throw new NotFoundException('User Not Found');
         }
 
-        $myWallet = Auth::guard($this->transactionRepository->doTransaction($data['provider']))->user()->wallet;
+        $myWallet = $this->transactionRepository->doTransaction($data['provider']);
 
-        if (!$this->checkUserBalance($myWallet, $data['amount'])) {
-            throw new InsufficientFundsException('Yu dont have money', 422);
+        if (!$this->checkUserBalance($myWallet, $data['amount'])) { // verificar saldo do usuário
+            throw new InsufficientFundsException();
         }
 
-        if ($this->isServiceAbleToMakeTransaction()) {
-            throw new IdleServiceException('Service is not responding. Try again later.');
+        if ($this->isServiceAbleToMakeTransaction()) { // o serviço é capaz de fazer transações
+            throw new UnavailableServiceException();
         }
 
         return $this->makeTransaction($payee, $data); // fazer transação
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function guardCanTransfer(): bool // guarda pode transferir
     {
         if (Auth::guard('users')->check()) {
@@ -60,7 +63,7 @@ class TransactionService
         if (Auth::guard('retailers')->check()) {
             return false;
         }
-        throw new InvalidDataProviderException('Provider not found', 422);
+        throw new NotFoundException('Provider not found');
     }
 
     /**
@@ -74,11 +77,11 @@ class TransactionService
         if ($provider == "retailers") {
             return new Retailer();
         }
-        throw new InvalidDataProviderException('Provider not found');
+        throw new NotFoundException('Provider not found');
 
     }
 
-    private function checkUserBalance(Wallet $wallet, float $money): bool // verificar saldo do usuário
+    private function checkUserBalance(Wallet $wallet, $money): bool // verificar saldo do usuário
     {
         return $wallet->balance >= $money;
     }
@@ -95,10 +98,9 @@ class TransactionService
         try {
             $model = $this->getProvider($data['provider']);
             return $model->find($data['payee_id']);
-        } catch (InvalidDataProviderException | \Exception $e) {
+        } catch (NotFoundException | \Exception $e) {
             return false;
         }
-
     }
 
 

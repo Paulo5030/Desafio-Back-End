@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionsController extends Controller
 {
-    public TransactionService $transactionService;
+    private TransactionService $transactionService;
 
     public function __construct(TransactionService $transactionService)
     {
@@ -26,8 +26,8 @@ class TransactionsController extends Controller
     public function postTransaction(Request $request): JsonResponse // postar transação
     {
         $this->validate($request, [
-            'provider' => 'required|in:users,retailers',
-            'payee_id' => 'required',
+            'provider' => 'required|in:users,retailers', // provedor
+            'payee_id' => 'required', //
             'amount' => 'required|numeric'
         ]);
 

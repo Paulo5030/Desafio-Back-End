@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,12 +42,35 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Register the exception handling callbacks for the application.
+     * Report or log an exception.
+     *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
+     * @param Throwable $e
+     * @return void
+     *
+     * @throws Exception
+     * @throws Throwable
      */
-    public function register(): void
+    public function report(Throwable $e): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        parent::report($e);
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  Request  $request
+     * @param Throwable $e
+     * @return Response|JsonResponse
+     *
+     * @throws Throwable
+     */
+    public function render($request, Throwable $e): Response|JsonResponse
+    {
+        if ($e instanceof AppException || $e instanceof AuthorizationException) {
+            return response($e->getMessage(), $e->getCode());
+        }
+        return parent::render($request, $e);
     }
 }

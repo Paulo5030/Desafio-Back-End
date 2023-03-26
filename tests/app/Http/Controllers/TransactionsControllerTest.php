@@ -15,8 +15,8 @@ class TransactionsControllerTest extends TestCase
         $user = User::factory()->create();
 
         $payload = [
-            'provider' => 'edggf',
-            'payee_id' => 'deucertoooooo',
+            'provider' => 'User',
+            'payee_id' => 'deuo',
             'amount'   => 123
         ];
 
@@ -54,11 +54,9 @@ class TransactionsControllerTest extends TestCase
             'payee_id' => $userPayed->id,
             'amount'   => 123
         ];
-
         $request = $this->actingAs($userPayer, 'users')
             ->post(route('postTransaction'), $payload);
-        $request->assertStatus(422);
-
+        $request->assertStatus(403);
     }
 
     public function testUserCanTransferMoney () // usuário de teste pode transferir dinheiro
