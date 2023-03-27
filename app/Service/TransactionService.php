@@ -39,7 +39,7 @@ class TransactionService
             throw new NotFoundException('User Not Found');
         }
 
-        $myWallet = $this->transactionRepository->doTransaction($data['provider']);
+        $myWallet = $this->transactionRepository->doTransaction();
 
         if (!$this->checkUserBalance($myWallet, $data['amount'])) { // verificar saldo do usuário
             throw new InsufficientFundsException();
@@ -108,7 +108,7 @@ class TransactionService
     {
         $payload = [
             'id' => Uuid::uuid4()->toString(),
-            'payer_wallet_id' => Auth::guard($data['provider'])->user()->wallet->id,
+            'payer_wallet_id' => Auth::user()->wallet->id,
             'payee_wallet_id' => $payee->wallet->id,
             'amount' => $data['amount']
         ];

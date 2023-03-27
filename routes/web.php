@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //User::factory()->create(['email' => 'paulo@dev.br']);
     return view('welcome');
 
 });
