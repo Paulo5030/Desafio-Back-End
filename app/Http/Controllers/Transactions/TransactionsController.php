@@ -32,7 +32,7 @@ class TransactionsController extends Controller
         ]);
 
         $fields = $request->only(['provider', 'payee_id', 'amount']);
-            $result = $this->transactionService->handle($fields);
+            $result = $this->transactionService->doTransaction($fields);
             return response()->json($result);
         }
 }

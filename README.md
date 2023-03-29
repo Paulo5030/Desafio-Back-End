@@ -65,16 +65,38 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-# Documentação do projeto
+# Docker Laravel para uma micro aplicação de carteira
 
-# Auth
-[x] Autenticação com o Passport 
+  Auth 
+  - Autenticação com o Passport 
+  - Coverage 90% em autenticação (Controller/Repository)
 
-[x] Coverage 90% em autenticação (Controller/Repository)
+ Transaction
+ - Logistas não podem fazer uma tranferencia 
+ - Criar uma transferencia de uma conta para outra 
 
-# Transaction 
-[x] Logistas não podem fazer uma tranferencia 
+  Componentes
+ - NGINX (mais recente) 
+ - MYSQL (mais recente)
+ - PHP8.1.0-FPM (mais recente)
 
-[x] Criar uma transferencia de uma conta para outra 
+1. Obter o projeto
+ - git clone https://github.com/Paulo5030/Desafio-Picpay.git
 
-[x] Coverage 90%
+Estrutura de Diretórios 
+
+# Comandos
+- Rodar composer install no projeto
+>docker-compose run --rm composer install
+
+- Rodar composer update no projeto
+>docker-compose run --rm composer update
+
+- Para gerar as migrations
+>php aritsan migrate
+
+- Para gerar as sementes do banco de dados
+>php aritsan migrate:fresh --seed
+
+- Para executar os testes da aplicação
+>vendor/bin/phpunit

@@ -3,14 +3,14 @@
 namespace App\Service;
 
 use App\Exceptions\NotFoundException;
-use App\Models\Retailer;
-use App\Models\User;
 use App\Repositories\AuthRepository;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Retailer;
 
 
 class AuthService

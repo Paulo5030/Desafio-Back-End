@@ -24,7 +24,7 @@ class MockService
         $uri = '/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6';
         try {
             $response = $this->client->request( 'GET', $uri);
-            return json_decode($response->getBody(), true);
+            return json_decode($response->getBody()->getContents(), true);
         }catch (GuzzleException $exception) {
             return ['message' => 'Não Autorizado'];
         }
@@ -33,15 +33,13 @@ class MockService
 
     public function notifyUser(string $fakeUserId): array // notificar o usuário
     {
-        // Sinceramente vc nao precisa fazer nada com esse Id mas ta ali
-        // pq se precisasse memo vc teria que ter
         $uri = 'https://o4d9z.mocklab.io/notify';
         try {
             $response = $this->client->request('GET', $uri);
 
-            return json_decode($response->getBody(), true);
+            return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $exception) {
-            return ['deu beyblade'];
+            return ['Autorizado'];
         }
 
     }

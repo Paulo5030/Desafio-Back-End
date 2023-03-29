@@ -11,7 +11,7 @@ class TransactionRepository
    {
        $this->model = $transaction;
    }
-   public function doTransaction ()
+   public function getWallet ()
    {
        return Auth::user()->wallet;
    }

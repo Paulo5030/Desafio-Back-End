@@ -3,14 +3,14 @@
 namespace App\Service;
 
 use App\Events\SendNotification;
-use App\Exceptions\NotFoundException;
-use App\Exceptions\UnavailableServiceException;
 use App\Exceptions\InsufficientFundsException;
+use App\Exceptions\NotFoundException;
 use App\Exceptions\TransactionDeniedException;
+use App\Exceptions\UnavailableServiceException;
 use App\Models\Retailer;
+use App\Models\User;
 use App\Models\Transactions\Transaction;
 use App\Models\Transactions\Wallet;
-use App\Models\User;
 use App\Repositories\Transaction\TransactionRepository;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -29,7 +29,7 @@ class TransactionService
      * @throws Exception
      * @throws TransactionDeniedException
      */
-    public function handle(array $data): Transaction
+    public function doTransaction (array $data): Transaction   // fazer transação
     {
         if (!$this->guardCanTransfer()) { // guarda pode transferir
             throw new TransactionDeniedException();
@@ -39,7 +39,7 @@ class TransactionService
             throw new NotFoundException('User Not Found');
         }
 
-        $myWallet = $this->transactionRepository->doTransaction();
+        $myWallet = $this->transactionRepository->getWallet(); // pegar carteira
 
         if (!$this->checkUserBalance($myWallet, $data['amount'])) { // verificar saldo do usuário
             throw new InsufficientFundsException();
