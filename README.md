@@ -76,9 +76,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
  - Criar uma transferencia de uma conta para outra 
 
   Componentes
- - NGINX (mais recente) 
- - MYSQL (mais recente)
- - PHP8.1.0-FPM (mais recente)
+ - NGINX 
+ - MYSQL 
+ - PHP8.1.0-FPM
 
 1. Obter o projeto
  - git clone https://github.com/Paulo5030/Desafio-Picpay.git
