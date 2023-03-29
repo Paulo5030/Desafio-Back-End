@@ -78,12 +78,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
   Componentes
  - NGINX 
  - MYSQL 
- - PHP8.1.0-FPM
+ - PHP8.1.0
 
 1. Obter o projeto
  - git clone https://github.com/Paulo5030/Desafio-Picpay.git
-
-Estrutura de Diretórios 
 
 # Comandos
 - Rodar composer install no projeto
