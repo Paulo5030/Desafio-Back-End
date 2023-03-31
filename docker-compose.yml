@@ -44,9 +44,9 @@ services:
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     environment:
       MYSQL_ROOT_PASSWORD: 28041998
-      MYSQL_USER: paulohenrique
-      MYSQL_PASSWORD: 28041998
-      MYSQL_DATABASE: desafio_picpay
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
 #Volumes
 volumes:
   dbdata:
