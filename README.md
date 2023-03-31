@@ -12,6 +12,17 @@
  - NGINX 
  - MYSQL 
  - PHP8.1.0
+ - Docker20.10.22
+
+Acesso
+ - A aplicação
+ >http://localhost:8000/
+
+Mysql
+ - Host: locahost
+ - Port: 3307
+ - User: homestead
+ - Password: secret
 
 1. Obter o projeto
  - git clone https://github.com/Paulo5030/Desafio-Picpay.git
@@ -31,3 +42,10 @@
 
 - Para executar os testes da aplicação
 >vendor/bin/phpunit
+
+- Caso a rota da aplicação de um erro de permissão
+>php artisan route:clear
+
+>php artisan config:clear
+
+>php artisan cache:clear
