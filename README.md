@@ -22,7 +22,7 @@ Acesso
  >http://localhost:8000/
 
 Mysql
- - Host: locahost
+ - Host: localhost
  - Port: 3307
  - User: homestead
  - Password: secret
