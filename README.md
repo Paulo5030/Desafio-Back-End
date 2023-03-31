@@ -14,6 +14,9 @@
  - PHP8.1.0
  - Docker20.10.22
 
+1. Obter o projeto
+ - git clone https://github.com/Paulo5030/Desafio-Picpay.git
+
 Acesso
  - A aplicação
  >http://localhost:8000/
@@ -23,9 +26,6 @@ Mysql
  - Port: 3307
  - User: homestead
  - Password: secret
-
-1. Obter o projeto
- - git clone https://github.com/Paulo5030/Desafio-Picpay.git
 
 # Comandos
 - Rodar composer install no projeto
