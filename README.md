@@ -29,23 +29,39 @@ Mysql
 
 # Comandos
 - Rodar composer install no projeto
->docker-compose run --rm composer install 
+```bash
+docker-compose run --rm composer install
+```
 
 - Rodar composer update no projeto
->docker-compose run --rm composer update
+```bash
+docker-compose run --rm composer update
+```
+
 
 - Para gerar as migrations
->php aritsan migrate
+```bash
+php aritsan migrate
+```
 
 - Para gerar as sementes do banco de dados
->php aritsan migrate:fresh --seed
+```bash
+php aritsan migrate:fresh --seed
+```
 
 - Para executar os testes da aplicação
->vendor/bin/phpunit
+```bash
+ vendor/bin/phpunit
+```
+
 
 - Caso a rota da aplicação de um erro de permissão
->php artisan route:clear
-
->php artisan config:clear
-
->php artisan cache:clear
+```bash
+php artisan route:clear
+```
+```bash
+php artisan config:clear
+```
+```bash
+php artisan cache:clear
+```
