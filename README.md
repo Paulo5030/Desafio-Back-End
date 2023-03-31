@@ -18,7 +18,7 @@
 
 # Comandos
 - Rodar composer install no projeto
->docker-compose run --rm composer install
+>docker-compose run --rm composer install 
 
 - Rodar composer update no projeto
 >docker-compose run --rm composer update
