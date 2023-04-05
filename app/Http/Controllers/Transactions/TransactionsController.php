@@ -20,19 +20,12 @@ class TransactionsController extends Controller
     }
 
     /**
-     * @throws ValidationException
      * @throws Exception
      */
     public function postTransaction(Request $request): JsonResponse // postar transação
     {
-        $this->validate($request, [
-            'provider' => 'required|in:users,retailers', // provedor
-            'payee_id' => 'required', //
-            'amount' => 'required|numeric'
-        ]);
-
         $fields = $request->only(['provider', 'payee_id', 'amount']);
-            $result = $this->transactionService->doTransaction($fields);
-            return response()->json($result);
-        }
+        $result = $this->transactionService->doTransaction($fields);
+        return response()->json($result);
+    }
 }
