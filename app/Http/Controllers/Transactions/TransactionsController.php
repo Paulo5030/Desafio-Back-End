@@ -23,7 +23,7 @@ class TransactionsController extends Controller
      */
     public function postTransaction(Request $request): JsonResponse // postar transação
     {
-        $fields = $request->only(['provider', 'payee_id', 'amount']);
+        $fields = $request->all();
         $result = $this->transactionService->doTransaction($fields);
         return response()->json($result);
     }

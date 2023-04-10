@@ -32,7 +32,7 @@ class TransactionsControllerTest extends TestCase
         $user = Retailer::factory()->create();
 
         $payload = [
-            'provider' => 'users',
+            'provider' => 'user',
             'payee_id' => 'deucertodfg',
             'amount'   => 123
         ];
@@ -50,7 +50,7 @@ class TransactionsControllerTest extends TestCase
         $userPayed = User::factory()->create();
 
         $payload = [
-            'provider' => 'users',
+            'provider' => 'user',
             'payee_id' => $userPayed->id,
             'amount'   => 123
         ];
@@ -67,7 +67,7 @@ class TransactionsControllerTest extends TestCase
         $userPayed = User::factory()->create();
 
         $payload = [
-            'provider' => 'users',
+            'provider' => 'user',
             'payee_id' => $userPayed->id,
             'amount'   => 100
         ];

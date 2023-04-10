@@ -2,19 +2,17 @@
 
 namespace App\Service;
 
-use App\Exceptions\NotFoundException;
 use App\Repositories\AuthRepository;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Traits\ValidateProviderTrait;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Retailer;
 
 
 class AuthService
 {
+    use ValidateProviderTrait;
     public function __construct(protected AuthRepository $authRepository)
     {
 
@@ -47,19 +45,5 @@ class AuthService
             'provider' => $provider
         ];
 
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getProvider (string $provider): Authenticatable // obter provedor
-    {
-        if ($provider == "user") {
-            return new User();
-        }
-        if ($provider == "retailer") {
-            return new Retailer();
-        }
-        throw new NotFoundException('Provider not found');
     }
 }

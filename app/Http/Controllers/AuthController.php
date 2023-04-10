@@ -21,7 +21,7 @@ class AuthController extends Controller
      */
     public function authentication(Request $request, string $provider): JsonResponse // autenticacao
     {
-        $fields = $request->only(['email', 'password']);
+        $fields = $request->all();
         $result = $this->authService->authenticate($provider, $fields);
         return response()->json($result);
     }

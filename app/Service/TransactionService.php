@@ -7,19 +7,18 @@ use App\Exceptions\InsufficientFundsException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\TransactionDeniedException;
 use App\Exceptions\UnavailableServiceException;
-use App\Models\Retailer;
-use App\Models\User;
 use App\Models\Transactions\Transaction;
 use App\Models\Transactions\Wallet;
 use App\Repositories\Transaction\TransactionRepository;
 use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Traits\ValidateProviderTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class TransactionService
 {
+    use ValidateProviderTrait;
     public function __construct(protected TransactionRepository $transactionRepository)
     {
 
@@ -64,21 +63,6 @@ class TransactionService
             return false;
         }
         throw new NotFoundException('Provider not found');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getProvider(string $provider): Authenticatable // obter provedor
-    {
-        if ($provider == "users") {
-            return new User();
-        }
-        if ($provider == "retailers") {
-            return new Retailer();
-        }
-        throw new NotFoundException('Provider not found');
-
     }
 
     private function checkUserBalance(Wallet $wallet, $money): bool // verificar saldo do usuário
