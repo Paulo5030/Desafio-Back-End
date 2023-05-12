@@ -11,7 +11,10 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+
     public $incrementing = false; //indicando o uso do uuid. Esperandp que vc preencha o uuid
 
     /**
@@ -36,7 +39,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function wallet ()
+    public function wallet()
     {
         return $this->hasOne(Wallet::class);
     }

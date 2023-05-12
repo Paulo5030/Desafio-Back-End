@@ -12,7 +12,7 @@ trait ValidateProviderTrait
     /**
      * @throws NotFoundException
      */
-    private function getProvider (string $provider): Authenticatable // obter provedor
+    private function getProvider(string $provider): Authenticatable // obter provedor
     {
         if ($provider == "user") {
             return new User();

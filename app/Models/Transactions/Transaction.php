@@ -17,11 +17,12 @@ class Transaction extends Model
        'amount' // quantia
     ];
 
-    public function walletPayer ()
+    public function walletPayer()
     {
+
         return $this->belongsTo(Wallet::class, 'payer_wallet_id');
     }
-    public function walletPayee ()
+    public function walletPayee()
     {
         return $this->belongsTo(Wallet::class, 'payee_wallet_id');
     }

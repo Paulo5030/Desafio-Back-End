@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\AuthService;
+use App\Service\Auth\AuthService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

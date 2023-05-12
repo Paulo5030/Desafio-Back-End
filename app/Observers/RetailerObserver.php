@@ -7,7 +7,7 @@ use Ramsey\Uuid\Uuid;
 
 class RetailerObserver
 {
-    public function created (Retailer $retailer)
+    public function created(Retailer $retailer)
     {
         $retailer->wallet()->create([
             'id'      =>  Uuid::uuid4()->toString(),

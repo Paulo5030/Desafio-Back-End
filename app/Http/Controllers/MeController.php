@@ -11,7 +11,7 @@ class MeController extends Controller
         $this->middleware('auth:users');
     }
 
-    public function getMe ()
+    public function getMe()
     {
         return response()->json(Auth::guard('users')->user());
     }

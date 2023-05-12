@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Throwable;
 
 class AppException extends \Exception
@@ -21,8 +22,11 @@ class AppException extends \Exception
      * @param int $code
      * @param Throwable|null $previous
      */
-    public function __construct(string $message = '', int $code = 400, Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = '',
+        int $code = StatusCodeInterface::STATUS_BAD_REQUEST,
+        Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
         $this->message = $message;
         $this->code = $code;

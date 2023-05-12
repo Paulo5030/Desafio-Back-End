@@ -12,28 +12,27 @@ class Wallet extends Model
         'id', 'user_id', 'balance'
     ];
 
-    public function transactions ()
+    public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function user ()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     public function deposit($value) // depositar
-   {
-       $this->update([
+    {
+        $this->update([
            'balance' => $this->attributes['balance'] + $value
-       ]);
-   }
+        ]);
+    }
 
-   public function withdraw($value) // retirar
-   {
-       $this->update([
+    public function withdraw($value) // retirar
+    {
+        $this->update([
            'balance' => $this->attributes['balance'] - $value
-       ]);
-   }
-
+        ]);
+    }
 }

@@ -23,7 +23,7 @@ class TransactionPostRequest extends FormRequest
     {
         return [
             'provider' => 'required|in:users,retailers', // provedor
-            'payee_id' => 'required', //
+            'payee_id' => 'required',
             'amount' => 'required|numeric'
         ];
     }
