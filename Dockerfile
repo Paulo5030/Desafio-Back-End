@@ -1,4 +1,4 @@
-FROM php:8.1.0-fpm
+FROM php:8.2.0-fpm
 
 # Copy composer.lock and composer.json into the working directory
 COPY composer.lock composer.json /var/www/html/

@@ -53,7 +53,10 @@ php aritsan migrate:fresh --seed
 ```bash
  vendor/bin/phpunit
 ```
-
+- Para executar o grumphp
+```bash
+ /vendor/bin/grumphp run
+```
 
 - Caso a rota da aplicação de um erro de permissão
 ```bash
