@@ -17,9 +17,9 @@ class UserBalanceService
     public function checkBalance($data): bool
     {
         $myWallet = $this->walletService->getWallet();
-        $checkUserBalance = $this->walletService->checkUserBalance($myWallet, $data['amount']);
+        $checkBalance = $this->walletService->checkUserBalance($myWallet, $data['amount']);
 
-        if (!$checkUserBalance) { // verificar saldo do usuário
+        if (!$checkBalance) { // verificar saldo do usuário
             throw new InsufficientFundsException();
         }
         return true;
