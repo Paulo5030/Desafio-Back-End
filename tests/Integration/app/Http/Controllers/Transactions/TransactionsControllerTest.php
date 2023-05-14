@@ -27,8 +27,8 @@ class TransactionsControllerTest extends TestCase
             'amount'   => 123
         ];
         $request = $this->actingAs($user, 'users')
-            ->postJson(route('postTransaction'), $payload);
-        $request->assertStatus(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
+            ->postJson(route('transaction'), $payload);
+        $request->assertStatus(StatusCodeInterface::STATUS_NOT_FOUND);
     }
     public function testRetailerShouldNotTransfer() // Varejista de teste não deve transferir
     {
@@ -41,7 +41,7 @@ class TransactionsControllerTest extends TestCase
         ];
 
         $request = $this->actingAs($user, 'retailers')
-            ->post(route('postTransaction'), $payload);
+            ->post(route('transaction'), $payload);
 
         $request->assertStatus(StatusCodeInterface::STATUS_UNAUTHORIZED);
     }
@@ -59,9 +59,9 @@ class TransactionsControllerTest extends TestCase
         ];
 
         $request = $this->actingAs($userPayer, 'users')
-            ->post(route('postTransaction'), $payload);
+            ->post(route('transaction'), $payload);
 
-        $request->assertStatus(StatusCodeInterface::STATUS_FORBIDDEN);
+        $request->assertStatus(StatusCodeInterface::STATUS_BAD_REQUEST);
     }
 
     public function testUserCanTransferMoney() // usuário de teste pode transferir dinheiro
@@ -77,7 +77,7 @@ class TransactionsControllerTest extends TestCase
         ];
 
         $request = $this->actingAs($userPayer, 'users')
-            ->post(route('postTransaction'), $payload);
+            ->post(route('transaction'), $payload);
 
         $request->assertStatus(StatusCodeInterface::STATUS_OK);
 

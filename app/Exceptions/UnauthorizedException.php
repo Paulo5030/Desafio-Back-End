@@ -4,12 +4,12 @@ namespace App\Exceptions;
 
 use Fig\Http\Message\StatusCodeInterface;
 
-class TransactionDeniedException extends AppException
+class UnauthorizedException extends AppException
 {
     public function __construct()
     {
         parent::__construct(
-            'Retailer is not authorized to make transactions',
+            'Unauthorized transaction',
             StatusCodeInterface::STATUS_UNAUTHORIZED
         );
     }

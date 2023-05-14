@@ -19,7 +19,7 @@ class AuthControllerTest extends TestCase
         ];
 
         $response = $this->post(route('authentication', ['provider' => 'test']), $payload);
-        $response->assertStatus(StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
+        $response->assertStatus(StatusCodeInterface::STATUS_NOT_FOUND);
         $this->assertEquals("Provider not found", $response->getContent());
     }
 

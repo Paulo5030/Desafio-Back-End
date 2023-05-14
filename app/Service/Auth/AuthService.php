@@ -14,7 +14,7 @@ class AuthService
 {
     use ValidateProviderTrait;
 
-    public function __construct(protected readonly UserAuthRepository $authRepository)
+    public function __construct(protected UserAuthRepository $authRepository)
     {
     }
 

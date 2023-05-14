@@ -2,17 +2,17 @@
 
 namespace App\Service\UserBalance;
 
-use App\Exceptions\InsufficientFundsException;
+use App\Exceptions\InsufficientAmountException;
 use App\Service\Wallet\WalletService;
 
 class UserBalanceService
 {
-    public function __construct(protected readonly WalletService $walletService)
+    public function __construct(protected WalletService $walletService)
     {
     }
 
     /**
-     * @throws InsufficientFundsException
+     * @throws InsufficientAmountException
      */
     public function checkBalance($data): bool
     {
@@ -20,7 +20,7 @@ class UserBalanceService
         $checkBalance = $this->walletService->checkUserBalance($myWallet, $data['amount']);
 
         if (!$checkBalance) { // verificar saldo do usuário
-            throw new InsufficientFundsException();
+            throw new InsufficientAmountException();
         }
         return true;
     }

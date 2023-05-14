@@ -27,7 +27,7 @@ Route::post(
 );
 
 Route::post(
-    '/transactions',
-    ['as' => 'postTransaction','uses' => 'App\Http\Controllers\Transactions\TransactionsController@postTransaction'
+    '/transaction',
+    ['as' => 'transaction','uses' => 'App\Http\Controllers\Transactions\TransactionsController@transaction'
     ]
 );

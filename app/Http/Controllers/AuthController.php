@@ -9,11 +9,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    private AuthService $authService;
-
-    public function __construct(AuthService $authService)
+    public function __construct(protected AuthService $authService)
     {
-        $this->authService = $authService;
     }
     //autenticando o usuario
     /**

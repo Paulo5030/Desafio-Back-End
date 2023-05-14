@@ -6,7 +6,7 @@ use App\Repositories\Wallet\WalletRepository;
 
 class WalletService
 {
-    public function __construct(protected readonly WalletRepository $walletRepository)
+    public function __construct(protected WalletRepository $walletRepository)
     {
     }
     public function getWallet()
@@ -14,8 +14,8 @@ class WalletService
         return $this->walletRepository->getWallet(); // pegar carteira
     }
 
-    public function checkUserBalance($wallet, $money): bool
+    public function checkUserBalance($wallet, $amount): bool
     {
-        return $this->walletRepository->checkUserBalance($wallet, $money);
+        return $this->walletRepository->checkUserBalance($wallet, $amount);
     }
 }

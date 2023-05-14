@@ -8,6 +8,6 @@ class NotFoundException extends AppException
 {
     public function __construct(string $message)
     {
-        parent::__construct($message, StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
+        parent::__construct($message, StatusCodeInterface::STATUS_NOT_FOUND);
     }
 }

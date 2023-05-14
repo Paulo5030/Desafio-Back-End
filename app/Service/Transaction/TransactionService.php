@@ -4,11 +4,12 @@ namespace App\Service\Transaction;
 
 use App\Events\SendNotification;
 use App\Exceptions\ErrorTransaction;
+use App\Exceptions\InsufficientAmountException;
+use App\Exceptions\NotFoundException;
+use App\Exceptions\UnauthorizedException;
 use App\Exceptions\UnavailableServiceException;
-use App\Models\Transactions\Transaction;
+use App\Repositories\Transaction\TransactionRepository;
 use App\Service\AuthorizeTransaction\AuthorizeTransactionService;
-use App\Service\Guard\GuardService;
-use App\Service\Payee\PayeeService;
 use App\Service\UserBalance\UserBalanceService;
 use App\Service\Wallet\WalletService;
 use App\Traits\ValidateProviderTrait;
@@ -22,54 +23,53 @@ class TransactionService
     use ValidateProviderTrait;
 
     public function __construct(
-        private readonly GuardService $guardService,
-        private readonly WalletService $walletService,
-        private readonly PayeeService $payeeService,
-        private readonly UserBalanceService $balance,
-        private readonly AuthorizeTransactionService $authorizeTransactionService
+        protected WalletService $walletService,
+        protected UserBalanceService $balance,
+        protected AuthorizeTransactionService $authorizeTransactionService,
+        protected TransactionRepository $transactionRepository
     ) {
     }
-
     /**
      * @throws Exception
      */
-    public function execute(array $data)// fazer transação
+    public function getDataTransaction(array $data, $payee): array// fazer transação
     {
-        $this->guardService->validateGuard();
-        $payee = $this->payeeService->checkBeneficiary($data);
-        $this->balance->checkBalance($data);
-
-        return $this->transaction($payee, $data);
+       return [
+            'id' => Uuid::uuid4()->toString(),
+            'payer_wallet_id' => Auth::user()->wallet->id,
+            'payee_wallet_id' => $payee->wallet->id,
+            'amount' => $data['amount']
+        ];
     }
-
     /**
      * @throws UnavailableServiceException
      * @throws ErrorTransaction
+     * @throws UnauthorizedException
+     * @throws InsufficientAmountException
+     * @throws NotFoundException
+     * @throws Exception
      */
-    public function transaction($payee, array $data) // fazer transação
+    public function transaction(array $data, $payee) // fazer transação
     {
         if ($this->authorizeTransactionService->authorizeTransaction()) {
-            $payload = [
-                'id' => Uuid::uuid4()->toString(),
-                'payer_wallet_id' => Auth::user()->wallet->id,
-                'payee_wallet_id' => $payee->wallet->id,
-                'amount' => $data['amount']
-            ];
+            $this->balance->checkBalance($data);
+            $payload = $this->getDataTransaction($data, $payee);
 
+            DB::beginTransaction();
             try {
-                return DB::transaction(function () use ($payload) {
-                    $transaction = Transaction::create($payload);
+                $transaction = $this->transactionRepository->create($payload);
+                $transaction->walletPayer->withdraw($payload['amount']);
+                $transaction->walletPayee->deposit($payload['amount']);
 
-                    $transaction->walletPayer->withdraw($payload['amount']);
-                    $transaction->walletPayee->deposit($payload['amount']);
-
-                    event(new SendNotification($transaction));
-                    DB::commit();
-                    return response()->json($transaction);
-                });
+                event(new SendNotification($transaction));
+                DB::commit();
+                return $transaction;
             } catch (\Exception $e) {
+                DB::rollBack();
                 throw new ErrorTransaction();
             }
         }
+
+        throw new UnauthorizedException();
     }
 }

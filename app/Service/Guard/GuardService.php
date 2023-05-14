@@ -2,34 +2,27 @@
 
 namespace App\Service\Guard;
 
-use App\Exceptions\NotFoundException;
-use App\Exceptions\TransactionDeniedException;
+use App\Exceptions\ProviderUnauthorizedException;
 use Illuminate\Support\Facades\Auth;
 
 class GuardService
 {
+
     /**
-     * @throws TransactionDeniedException
-     * @throws NotFoundException
+     * @throws ProviderUnauthorizedException
      */
     public function validateGuard(): void
     {
         if (!$this->guardCanTransfer()) { // guarda pode transferir
-            throw new TransactionDeniedException();
+            throw new ProviderUnauthorizedException();
         }
     }
 
-    /**
-     * @throws NotFoundException
-     */
     public function guardCanTransfer(): bool // guarda pode transferir
     {
         if (Auth::guard('users')->check()) {
             return true;
         }
-        if (Auth::guard('retailers')->check()) {
-            return false;
-        }
-        throw new NotFoundException('Provider not found');
+        return false;
     }
 }

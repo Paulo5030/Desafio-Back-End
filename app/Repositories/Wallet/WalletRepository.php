@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class WalletRepository
 {
-    public function __construct(protected readonly Transaction $transaction)
-    {
-    }
     public function getWallet()
     {
         return Auth::user()->wallet;

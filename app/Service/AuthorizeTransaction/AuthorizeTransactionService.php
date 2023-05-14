@@ -10,10 +10,10 @@ class AuthorizeTransactionService
     public function authorizeTransaction(): bool //  autorizar transação
     {
         $response = Http::get(self::AUTHORIZATION);
-        if ($response->json()['message'] != 'Autorizado') {
-            return false;
+        if ($response->json()['message'] === 'Autorizado') {
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
