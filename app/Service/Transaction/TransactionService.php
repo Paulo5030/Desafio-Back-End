@@ -3,7 +3,7 @@
 namespace App\Service\Transaction;
 
 use App\Events\SendNotification;
-use App\Exceptions\ErrorTransaction;
+use App\Exceptions\ErrorTransactionException;
 use App\Exceptions\InsufficientAmountException;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\UnauthorizedException;
@@ -43,7 +43,7 @@ class TransactionService
     }
     /**
      * @throws UnavailableServiceException
-     * @throws ErrorTransaction
+     * @throws ErrorTransactionException
      * @throws UnauthorizedException
      * @throws InsufficientAmountException
      * @throws NotFoundException
@@ -53,6 +53,7 @@ class TransactionService
     {
         if ($this->authorizeTransactionService->authorizeTransaction()) {
             $this->balance->checkBalance($data);
+            $this->balance->checkUser($data);
             $payload = $this->getDataTransaction($data, $payee);
 
             DB::beginTransaction();
@@ -66,7 +67,7 @@ class TransactionService
                 return $transaction;
             } catch (\Exception $e) {
                 DB::rollBack();
-                throw new ErrorTransaction();
+                throw new ErrorTransactionException();
             }
         }
 

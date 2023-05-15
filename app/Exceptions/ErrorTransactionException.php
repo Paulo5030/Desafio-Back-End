@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Fig\Http\Message\StatusCodeInterface;
 
-class ErrorTransaction extends AppException
+class ErrorTransactionException extends AppException
 {
     public function __construct()
     {

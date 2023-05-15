@@ -2,7 +2,9 @@
 
 namespace App\Service\UserBalance;
 
+use App\Exceptions\ErrorTransactionException;
 use App\Exceptions\InsufficientAmountException;
+use App\Exceptions\UnauthorizedException;
 use App\Service\Wallet\WalletService;
 
 class UserBalanceService
@@ -23,5 +25,19 @@ class UserBalanceService
             throw new InsufficientAmountException();
         }
         return true;
+    }
+
+    /**
+     * @throws UnauthorizedException
+     */
+    public function checkUser($data): bool
+    {
+        $myWallet = $this->walletService->getWallet();
+        $checkUser = $this->walletService->checkUser($myWallet, $data['payee_id']);
+
+        if ($checkUser) {
+            throw new UnauthorizedException();
+        }
+        return false;
     }
 }

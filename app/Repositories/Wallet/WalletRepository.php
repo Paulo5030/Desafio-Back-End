@@ -13,8 +13,13 @@ class WalletRepository
         return Auth::user()->wallet;
     }
 
-    public function checkUserBalance(Wallet $wallet, $money): bool // verificar saldo do usuário
+    public function checkUserBalance(Wallet $wallet, $amount): bool // verificar saldo do usuário
     {
-        return $wallet->balance >= $money;
+        return $wallet->balance >= $amount;
+    }
+
+    public function checkUser(Wallet $wallet, $user): bool
+    {
+        return $wallet->user_id === $user;
     }
 }

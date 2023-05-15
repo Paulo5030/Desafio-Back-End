@@ -18,4 +18,9 @@ class WalletService
     {
         return $this->walletRepository->checkUserBalance($wallet, $amount);
     }
+
+    public function checkUser($wallet, $user): bool
+    {
+        return $this->walletRepository->checkUser($wallet, $user);
+    }
 }
