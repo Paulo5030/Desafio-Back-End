@@ -11,7 +11,7 @@
   Componentes
  - NGINX 
  - MYSQL 
- - PHP8.1.0
+ - PHP8.2.0
  - Docker20.10.22
 
 1. Obter o projeto
