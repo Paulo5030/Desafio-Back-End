@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class GuardService
 {
-
     /**
      * @throws ProviderUnauthorizedException
      */

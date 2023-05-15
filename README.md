@@ -27,6 +27,29 @@ Mysql
  - User: homestead
  - Password: secret
 
+Exemplo - Payload:
+
+```bash
+{
+    "provider" : "user",
+    "payee_id" : "4",
+    "amount" : 15
+    
+}
+```
+
+Exemplo - Resposta:
+
+```bash
+{
+    "id": "1",
+    "payer_wallet_id": "2",
+    "payee_wallet_id": "3",
+    "amount": 15,
+    "created_at": "14/05/2023 01:45:34"
+}
+```
+
 # Comandos
 - Rodar composer install no projeto
 ```bash

@@ -34,7 +34,7 @@ class TransactionService
      */
     public function getDataTransaction(array $data, $payee): array// fazer transação
     {
-       return [
+        return [
             'id' => Uuid::uuid4()->toString(),
             'payer_wallet_id' => Auth::user()->wallet->id,
             'payee_wallet_id' => $payee->wallet->id,
