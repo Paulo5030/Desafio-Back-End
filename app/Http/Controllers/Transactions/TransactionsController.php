@@ -15,8 +15,8 @@ class TransactionsController extends Controller
 {
     public function __construct(
         protected TransactionService $transactionService,
-        private GuardService $guardService,
-        private PayeeService $payeeService
+        protected GuardService $guardService,
+        protected PayeeService $payeeService
     ) {
     }
 
