@@ -10,7 +10,6 @@ use App\Service\Payee\PayeeService;
 use App\Service\Transaction\TransactionService;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
 {

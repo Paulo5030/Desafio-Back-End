@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use TYPO3\CMS\Reports\Report\Status\Status;
 
 class Handler extends ExceptionHandler
 {
@@ -74,7 +76,7 @@ class Handler extends ExceptionHandler
             return response($e->getMessage(), $e->getCode());
         }
         if ($e instanceof ValidationException) {
-            return response($e->getMessage(), 422);
+            return response($e->getMessage(), StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY);
         }
         return parent::render($request, $e);
     }
