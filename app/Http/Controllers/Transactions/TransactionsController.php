@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Service\Guard\GuardService;
 use App\Service\Payee\PayeeService;
@@ -23,7 +24,7 @@ class TransactionsController extends Controller
     /**
      * @throws Exception
      */
-    public function transaction(Request $request): JsonResponse // postar transação
+    public function transaction(TransactionRequest $request): JsonResponse // postar transação
     {
         $data = $request->all();
         $this->guardService->validateGuard();

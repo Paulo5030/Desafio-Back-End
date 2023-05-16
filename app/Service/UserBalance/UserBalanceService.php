@@ -2,7 +2,6 @@
 
 namespace App\Service\UserBalance;
 
-use App\Exceptions\ErrorTransactionException;
 use App\Exceptions\InsufficientAmountException;
 use App\Exceptions\UnauthorizedException;
 use App\Service\Wallet\WalletService;

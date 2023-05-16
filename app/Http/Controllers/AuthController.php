@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthRequest;
 use App\Service\Auth\AuthService;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -16,7 +16,7 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function authentication(Request $request, string $provider): JsonResponse // autenticacao
+    public function authentication(AuthRequest $request, string $provider): JsonResponse // autenticacao
     {
         $fields = $request->all();
         $result = $this->authService->authenticate($provider, $fields);

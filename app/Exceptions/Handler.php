@@ -6,8 +6,10 @@ use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -70,6 +72,9 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof AppException || $e instanceof AuthorizationException) {
             return response($e->getMessage(), $e->getCode());
+        }
+        if ($e instanceof ValidationException) {
+            return response($e->getMessage(), 422);
         }
         return parent::render($request, $e);
     }

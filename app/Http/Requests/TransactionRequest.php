@@ -20,7 +20,7 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'provider' => 'required|in:users,retailers', // provedor
+            'provider' => 'required|in:user,retailer', // provedor
             'payee_id' => 'required',
             'amount' => 'required|numeric'
         ];

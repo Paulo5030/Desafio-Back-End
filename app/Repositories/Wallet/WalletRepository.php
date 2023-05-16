@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Wallet;
 
-use App\Models\Transactions\Transaction;
 use App\Models\Transactions\Wallet;
 use Illuminate\Support\Facades\Auth;
 

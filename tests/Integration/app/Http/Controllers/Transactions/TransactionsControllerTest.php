@@ -22,7 +22,7 @@ class TransactionsControllerTest extends TestCase
         $user = User::factory()->create();
 
         $payload = [
-            'provider' => 'User',
+            'provider' => 'user',
             'payee_id' => 'deuo',
             'amount'   => 123
         ];
